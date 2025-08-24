@@ -62,9 +62,7 @@ CREATE TABLE cart (
     CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );
 Related Products Table
-sql
-Copy
-Edit
+
 CREATE TABLE related_product (
     product_id INT NOT NULL,
     related_product_id INT NOT NULL,
