@@ -1,0 +1,15 @@
+<h2 style="margin-left: 20px;">Products by Category</h2>
+<div class="products-wrapper">
+  <div class="product-card" *ngFor="let product of products">
+    <div class="product-image">
+      <!-- If you have mainImageUrl, use it; else show a placeholder -->
+      <img [src]="product.mainImageUrl" alt="{{ product.name }}" />
+    </div>
+    <div class="product-details">
+      <h3>{{ product.name }}</h3>
+      <p class="price">₹{{ product.price }}</p>
+      <p class="qty">Available: {{ product.availabilityQty }}</p>
+      <button class="buy-btn" (click)="viewProduct(product)">View</button>
+    </div>
+  </div>
+</div>

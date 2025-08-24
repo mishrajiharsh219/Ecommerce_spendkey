@@ -1,0 +1,56 @@
+<div class="cart-products-wrapper">
+  <div class="cart-product-card" *ngFor="let product of cartProducts">
+    <div class="cart-product-image">
+     <img [src]="product.mainImageUrl" alt="{{ product.name }}" />
+    </div>
+    <div class="cart-product-details">
+      <h3>{{ product.productName }}</h3>
+      <p class="price">Total Price: ₹{{ product.totalPrice }}</p>
+      <p class="price">Unit Price: ₹{{ product.unitPrice }}</p>
+      <div class="cart-actions-beautiful">
+        <button class="cart-btn beautiful-btn" (click)="decrementQty(product.productId)" [disabled]="product.cartQty <= 1">−</button>
+        <span class="cart-qty beautiful-qty">{{ product.quantity }}</span>
+        <button class="cart-btn beautiful-btn" (click)="incrementQty(product.productId)" [disabled]="product.cartQty >= product.availabilityQty">+</button>
+        <button class="remove-btn" (click)="removeFromCart(product.productId)">
+          <span class="material-icons" style="vertical-align: middle;">delete</span> Remove
+        </button>
+      </div>
+      <p class="size" *ngIf="product.size">Size: {{ product.size }}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="cartProducts.length === 0" class="emptyBag">
+  <div style="display: grid;text-align: center;">
+    <h3>Hey, it feels so light!</h3>
+    <span>There is nothing in your bag. Let's add some items.</span>
+  </div>
+  <div>
+    <button style="width: 100%;color: white;background: #24a3b5;" (click)="moveToWishListPage()">ADD ITEMS FROM WISHLIST</button>
+  </div>
+</div>
+
+<div *ngIf="cartProducts.length > 0" class="cart-summary-section">
+  <h2>Order Summary</h2>
+  <div class="summary-row">
+    <span>Subtotal:</span>
+    <span>₹{{ getSubtotal() }}</span>
+  </div>
+  <div class="summary-row">
+    <span>GST (18%):</span>
+    <span>₹{{ getGST() }}</span>
+  </div>
+  <div class="summary-row">
+    <span>Platform Fee:</span>
+    <span>₹{{ platformFee }}</span>
+  </div>
+  <div class="summary-row">
+    <span>Delivery Charges:</span>
+    <span>₹{{ deliveryCharges }}</span>
+  </div>
+  <hr />
+  <div class="summary-row total">
+    <span>Total Payable:</span>
+    <span>₹{{ getTotalPayable() }}</span>
+  </div>
+</div>

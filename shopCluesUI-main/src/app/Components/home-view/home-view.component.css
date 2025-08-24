@@ -1,0 +1,429 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.categories-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.categories-container h2 {
+  color: #2d3748;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.category-tree {
+  background: transparent;
+  padding: 0;
+}
+
+.category-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category-item {
+  margin: 0;
+}
+
+.category-content {
+  display: flex;
+  align-items: center;
+  padding: 18px 24px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.category-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(102, 126, 234, 0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.category-content:hover::before {
+  opacity: 1;
+}
+
+.category-content:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.category-content.has-children {
+  font-weight: 600;
+}
+
+.category-content.expanded {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
+  border-color: rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Level-specific styling */
+.category-content.level-0 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 24px 28px;
+  margin-bottom: 8px;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+.category-content.level-0:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(102, 126, 234, 0.4);
+}
+
+.category-content.level-0.expanded {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: translateY(-4px);
+}
+
+.category-content.level-1 {
+  background: linear-gradient(135deg, #e2e8f0 0%, #f7fafc 100%);
+  color: #2d3748;
+  margin-left: 30px;
+  border-left: 4px solid #667eea;
+  font-size: 1.05rem;
+}
+
+.category-content.level-1:hover {
+  background: linear-gradient(135deg, #cbd5e0 0%, #e2e8f0 100%);
+  border-left: 4px solid #5a67d8;
+}
+
+.category-content.level-1.expanded {
+  background: linear-gradient(135deg, #cbd5e0 0%, #e2e8f0 100%);
+}
+
+.category-content.level-2 {
+  background: linear-gradient(135deg, #f7fafc 0%, #ffffff 100%);
+  color: #4a5568;
+  margin-left: 60px;
+  border-left: 4px solid #a0aec0;
+  font-size: 1rem;
+}
+
+.category-content.level-2:hover {
+  background: linear-gradient(135deg, #edf2f7 0%, #f7fafc 100%);
+  border-left: 4px solid #667eea;
+}
+
+/* Expand arrow styling */
+.expand-arrow {
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.category-content.level-0 .expand-arrow {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.category-content:not(.level-0) .expand-arrow {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.expand-arrow:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.expand-arrow.spacer {
+  width: 32px;
+  background: transparent;
+}
+
+.arrow {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: inherit;
+  font-size: 14px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.arrow-right {
+  transform: rotate(0deg);
+}
+
+.arrow-down {
+  transform: rotate(90deg);
+}
+
+.category-icon {
+  margin-right: 16px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.category-name {
+  flex: 1;
+  font-weight: inherit;
+  font-size: inherit;
+  letter-spacing: 0.5px;
+}
+
+.category-id {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-left: 16px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.category-content:not(.level-0) .category-id {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.category-count {
+  margin-left: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  color: inherit;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+.category-content:not(.level-0) .category-count {
+  background: rgba(102, 126, 234, 0.2);
+  color: #5a67d8;
+}
+
+/* Children container animation */
+.children-container {
+  overflow: hidden;
+  animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 12px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+    transform: translateY(0);
+  }
+}
+
+/* Shopping-specific icons */
+.shopping-icon {
+  margin-right: 12px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: inherit;
+  font-size: 16px;
+}
+
+.category-content:not(.level-0) .shopping-icon {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+/* Hover effects for better UX */
+.category-content:hover .category-icon {
+  transform: scale(1.1);
+}
+
+.category-content:hover .shopping-icon {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.category-content:not(.level-0):hover .shopping-icon {
+  background: rgba(102, 126, 234, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .categories-container {
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .category-content.level-1 {
+    margin-left: 20px;
+  }
+
+  .category-content.level-2 {
+    margin-left: 40px;
+  }
+
+  .category-name {
+    font-size: 14px;
+  }
+
+  .category-id {
+    font-size: 10px;
+  }
+}
+
+/* Add subtle pulse animation for interactive elements */
+.category-content.has-children::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.2);
+    opacity: 0.6;
+  }
+}
+/* Carousel Container */
+.carousel-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: #fff;
+}
+
+/* Carousel Slide */
+.carousel-slide {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Carousel Image */
+.carousel-image {
+  width: 100%;
+  height: auto;
+  max-height: 340px;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.carousel-dots span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.carousel-dots .active {
+  background: #007bff;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .carousel-container {
+    max-width: 98vw;
+  }
+  .carousel-image {
+    max-height: 220px;
+  }
+}
+
+@media (max-width: 500px) {
+  .carousel-container {
+    max-width: 100vw;
+    border-radius: 0;
+  }
+  .carousel-image {
+    max-height: 140px;
+    border-radius: 0;
+  }
+}

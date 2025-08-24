@@ -1,0 +1,23 @@
+<div class="product-view-wrapper" *ngIf="product">
+  <div class="product-card">
+    <div class="product-image">
+      <img [src]="product.mainImageUrl" alt="{{ product.name }}" />
+    </div>
+    <div class="product-details">
+      <h2>{{ product.name }}</h2>
+      <p class="price">₹{{ product.price }}</p>
+      <p class="qty">Available: {{ product.availabilityQty }}</p>
+      <div class="cart-actions">
+        <button class="cart-btn" (click)="decrementQty()" [disabled]="cartQty <= 1">-</button>
+        <span class="cart-qty">{{ cartQty }}</span>
+        <button class="cart-btn" (click)="incrementQty()" [disabled]="cartQty >= product.availabilityQty">+</button>
+      </div>
+      <button class="add-cart-btn" (click)="addToCart()" [disabled]="addedToCart">
+        {{ addedToCart ? 'Added to Cart' : 'Add to Cart' }}
+      </button>
+      <button class="remove-cart-btn" *ngIf="addedToCart" (click)="removeFromCart()">
+        Remove from Cart
+      </button>
+    </div>
+  </div>
+</div>

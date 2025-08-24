@@ -1,0 +1,60 @@
+<div>
+  <div class="middleSection">
+    
+    <div class="carousel-container">
+      <div class="carousel-slide">
+        <img [src]="carouselImages[currentIndex]" alt="Carousel Image" class="carousel-image">
+      </div>
+      
+      <div class="carousel-dots">
+        <span *ngFor="let img of carouselImages; let i = index" 
+              [class.active]="i === currentIndex"
+              (click)="selectImage(i)"></span>
+      </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="categories-container" *ngIf="categories && categories.length > 0">
+      <h2>Product Categories</h2>
+      <div class="category-tree">
+        <ng-container *ngTemplateOutlet="categoryTemplate; context: { categories: categories, level: 0 }"></ng-container>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Recursive template for nested categories -->
+<ng-template #categoryTemplate let-categories="categories" let-level="level">
+  <ul class="category-list" [ngClass]="'level-' + level">
+    <li *ngFor="let category of categories; trackBy: trackByFn" class="category-item">
+      <div class="category-content"
+           [ngClass]="'level-' + level + (hasChildren(category) ? ' has-children' : '') + (isExpanded(category.id) ? ' expanded' : '')"
+           (click)="onCategoryClick(category, $event)">
+        
+        <!-- Expand/Collapse Arrow -->
+        <span class="expand-arrow" *ngIf="hasChildren(category)">
+          <span class="arrow" [class]="isExpanded(category.id) ? 'arrow-down' : 'arrow-right'">▶</span>
+        </span>
+        
+        <!-- Spacer for items without children -->
+        <span class="expand-arrow spacer" *ngIf="!hasChildren(category)"></span>
+        
+        <!-- Category Icon -->
+        <span class="category-icon">
+          {{ hasChildren(category) ? '📁' : '📄' }}
+        </span>
+        
+        <!-- Category Info -->
+        <span class="category-name">{{ category.name }}</span>
+        <span class="category-id" *ngIf="category.id">(ID: {{ category.id }})</span>
+      </div>
+      
+      <!-- Recursively render children ONLY if expanded -->
+      <div class="children-container" 
+           *ngIf="hasChildren(category) && isExpanded(category.id)">
+        <ng-container *ngTemplateOutlet="categoryTemplate; context: { categories: category.children, level: level + 1 }"></ng-container>
+      </div>
+    </li>
+  </ul>
+</ng-template>
