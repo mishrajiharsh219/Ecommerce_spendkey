@@ -1,0 +1,17 @@
+com\example\ecommerce\entity\RelatedProduct.class
+com\example\ecommerce\entity\Cart.class
+com\example\ecommerce\service\ProductService.class
+com\example\ecommerce\service\CategoryService.class
+com\example\ecommerce\controller\ProductController.class
+com\example\ecommerce\dto\ProductDTO.class
+com\example\ecommerce\entity\RelatedProductId.class
+com\example\ecommerce\repository\CartRepository.class
+com\example\ecommerce\dto\CartItemDTO.class
+com\example\ecommerce\entity\Product.class
+com\example\ecommerce\repository\ProductRepository.class
+com\example\ecommerce\controller\CartController.class
+com\example\ecommerce\entity\Category.class
+com\example\ecommerce\service\CartService.class
+com\example\ecommerce\repository\CategoryRepository.class
+com\example\ecommerce\EcommerceApp.class
+com\example\ecommerce\controller\CategoryController.class
