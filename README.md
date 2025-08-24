@@ -28,7 +28,6 @@ The project covers backend API development, frontend integration, database desig
 - **Backend:** Java (Spring Boot)  
 - **Frontend:** Angular 12+  
 - **Database:** PostgreSQL  
-- **Extras:** Docker support, Postman Collection for testing APIs  
 
 ---
 
