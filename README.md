@@ -1,54 +1,49 @@
-# Ecommerce_spendkey
-# 🛒 Full-Stack E-Commerce Application  
+# 🛒 Ecommerce Spendkey  
 
-This is a **full-stack e-commerce application** built as part of a take-home assignment.  
-The project demonstrates backend API development, frontend integration, database design, and recursive data structures (category tree).  
+A **full-stack e-commerce application** that I built as part of the Spendkey take-home assignment.  
+The project covers backend API development, frontend integration, database design, and recursive data structures (category tree).  
 
 ---
 
-## 🚀 Features  
+## 🚀 Features (Implemented)  
 
-### 🔹 Backend (Spring Boot / .NET Core)  
-- Fetch **category tree** (recursive structure)  
-- Fetch **products under category** (including subcategories)  
-- Add product to **shopping cart**  
-- View **cart items** with quantity & total price  
-- **Bonus:** Related products API  
+### 🔹 Backend (Spring Boot)  
+- ✅ Provides a **category tree API** with recursive hierarchy (Electronics → Computers → Laptops etc.)  
+- ✅ Fetches **products by category** (includes products from subcategories)  
+- ✅ Allows users to **add products to cart** with quantity  
+- ✅ Returns **cart items** with total price calculation  
+- ✅ Supports **related products** API (many-to-many relationship)  
 
 ### 🔹 Frontend (Angular)  
-- **Category Navigation Page** – Recursive tree view of categories  
-- **Product Listing Page** – List products under category with Add to Cart option  
-- **Cart Page** – Show all cart items with name, quantity, price, and total cost  
-- **Form Handling** – Reactive / Template-driven forms for cart actions  
+- ✅ **Category Navigation Page** with recursive tree view for browsing categories  
+- ✅ **Product Listing Page** displaying products with price, stock, and “Add to Cart” button  
+- ✅ **Cart Page** showing items, quantity, price per unit, and total cost  
+- ✅ **Form Handling** with Angular Reactive Forms for cart actions  
+- ✅ Integrated product **images** to make the UI visually rich  
 
 ---
 
 ## 🛠️ Tech Stack  
 
-- **Backend:** Java (Spring Boot) / C# (.NET Core)  
-- **Frontend:** Angular (v12+)  
-- **Database:** MySQL / PostgreSQL / MSSQL  
-- **Optional:** Docker, Postman Collection, Unit Tests  
+- **Backend:** Java (Spring Boot)  
+- **Frontend:** Angular 12+  
+- **Database:** PostgreSQL  
+- **Extras:** Docker support, Postman Collection for testing APIs  
 
 ---
 
 ## 📂 Database Schema  
 
 ### Category Table  
-
--- =========================
--- CATEGORY TABLE
--- =========================
+```sql
 CREATE TABLE category (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     parent_id INT NULL,
     CONSTRAINT fk_parent_category FOREIGN KEY (parent_id) REFERENCES category(id) ON DELETE CASCADE
 );
+Product Table
 
--- =========================
--- PRODUCT TABLE
--- =========================
 CREATE TABLE product (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -58,10 +53,8 @@ CREATE TABLE product (
     main_image_url TEXT,
     CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
 );
+Cart Table
 
--- =========================
--- CART TABLE
--- =========================
 CREATE TABLE cart (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
@@ -69,10 +62,10 @@ CREATE TABLE cart (
     quantity INT NOT NULL CHECK (quantity > 0),
     CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );
-
--- =========================
--- RELATED PRODUCTS TABLE (Many-to-Many Self-Join)
--- =========================
+Related Products Table
+sql
+Copy
+Edit
 CREATE TABLE related_product (
     product_id INT NOT NULL,
     related_product_id INT NOT NULL,
@@ -80,55 +73,50 @@ CREATE TABLE related_product (
     CONSTRAINT fk_related_product FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE,
     CONSTRAINT fk_related_product_ref FOREIGN KEY (related_product_id) REFERENCES product(id) ON DELETE CASCADE
 );
-
--- =========================
--- RESET SEQUENCES AFTER INSERTS (PostgreSQL only)
--- =========================
-SELECT setval(pg_get_serial_sequence('category','id'), (SELECT MAX(id) FROM category));
-SELECT setval(pg_get_serial_sequence('product','id'), (SELECT MAX(id) FROM product));
-SELECT setval(pg_get_serial_sequence('cart','id'), (SELECT MAX(id) FROM cart));
+```
 ⚙️ Setup & Run
 1️⃣ Clone Repository
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/your-username/ecommerce-spendkey.git
+cd ecommerce-spendkey
 
-2️⃣ Backend Setup (Spring Boot Example)
+2️⃣ Backend Setup (Spring Boot)
+bash
+Copy
+Edit
 cd backend
 mvn clean install
-mvn spring-boot: run
-
-
+mvn spring-boot:run
 Runs on 👉 http://localhost:8080
 
-3️⃣ Frontend Setup (Angular Example)
+3️⃣ Frontend Setup (Angular)
+bash
+Copy
+Edit
 cd frontend
 npm install
 ng serve
-
-
 Runs on 👉 http://localhost:4200
 
 4️⃣ Database Setup
+Import data.sql into PostgreSQL
 
-Import data.sql into your database
-
-Update DB credentials in:
-application.properties (Spring Boot)
+Update DB credentials in application.properties
 
 📖 API Endpoints
 Method	Endpoint	Description
 GET	/categories	Get full category tree
-GET	/products?categoryId=ID	Get products under a category (with subcategories)
+GET	/products?categoryId=ID	Get products under a category (including subcategories)
 POST	/cart/add	Add product to cart
 GET	/cart	Get cart items with total price
-GET	/product/{id}/related	(Bonus) Get related products
+GET	/product/{id}/related	Get related products
+
 ✅ Deliverables
+Full backend (Spring Boot) + frontend (Angular) code
 
-Backend + Frontend source code
-
-SQL schema for categories, products, and cart
+Database schema with seed data and images
 
 Setup instructions (this README)
 
 👨‍💻 Author
-Developed as part of Spendkey Take-Home Assignment
+Harsh Mishra
+
